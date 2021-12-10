@@ -27,12 +27,13 @@ async def on_ready():
     print("-------------------------")
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Lemon on GitHub"))
 
+
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         matches = []
         for command in client.commands:
-            if (re.findall(f"[{ctx.message.content[1:]}]+", command.name)): # i know
+            if (re.findall(f"[{ctx.message.content[1:]}]+", command.name)): # i know, bad way to do it but it kinda works and its simple
                 matches.append(command.name)
         similar = ""
         if matches:
@@ -40,7 +41,7 @@ async def on_command_error(ctx, error):
         await ctx.channel.send(content=f"Command not found!\n{similar}")
     else:
         print(error)
-        
+
 for filename in os.listdir('./cogs/'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
