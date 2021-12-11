@@ -46,5 +46,27 @@ for filename in os.listdir('./cogs/'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+roles = {
+	"🐱": "github",
+	"🎉": "announcements",
+	"📢": "events"
+}
+
+@client.event
+async def on_raw_reaction_add(payload):
+	if payload.channel_id == 918887016832331828:
+		if payload.emoji.name in roles:
+			guild = client.get_guild(payload.guild_id)
+			role = discord.utils.get(guild.roles, name=roles[payload.emoji.name])
+			await payload.member.add_roles(role)
+
+@client.event
+async def on_raw_reaction_remove(payload):
+	if payload.channel_id == 918887016832331828:
+		if payload.emoji.name in roles:
+			guild = client.get_guild(payload.guild_id)
+			role = discord.utils.get(guild.roles, name=roles[payload.emoji.name])
+			await guild.get_member(payload.user_id).remove_roles(role)
+
 keep_alive()
 client.run(TOKEN)
