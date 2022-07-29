@@ -12,7 +12,7 @@ class Embeds(commands.Cog):
 	# cog has been successfully loaded
 	@commands.Cog.listener()
 	async def on_ready(self):
-		print("Data commands - ✔️ ")
+		print("Embed commands - ✔️ ")
 
 	@commands.command()
 	@commands.has_permissions(manage_messages = True)
